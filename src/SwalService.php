@@ -4,17 +4,11 @@ namespace LivewireSwal;
 
 class SwalService
 {
-    /**
-     * Fire a basic SweetAlert
-     */
     public function fire(array $options = []): void
     {
         $this->dispatch('swal:fire', $options);
     }
 
-    /**
-     * Fire a success alert
-     */
     public function success(string $title = 'Success!', string $text = '', array $options = []): void
     {
         $defaultOptions = [
@@ -28,9 +22,6 @@ class SwalService
         $this->fire(array_merge($defaultOptions, $options));
     }
 
-    /**
-     * Fire an error alert
-     */
     public function error(string $title = 'Error!', string $text = '', array $options = []): void
     {
         $defaultOptions = [
@@ -43,9 +34,6 @@ class SwalService
         $this->fire(array_merge($defaultOptions, $options));
     }
 
-    /**
-     * Fire a warning alert
-     */
     public function warning(string $title = 'Warning!', string $text = '', array $options = []): void
     {
         $defaultOptions = [
@@ -58,9 +46,6 @@ class SwalService
         $this->fire(array_merge($defaultOptions, $options));
     }
 
-    /**
-     * Fire an info alert
-     */
     public function info(string $title = 'Info', string $text = '', array $options = []): void
     {
         $defaultOptions = [
@@ -74,9 +59,6 @@ class SwalService
         $this->fire(array_merge($defaultOptions, $options));
     }
 
-    /**
-     * Fire a confirmation alert
-     */
     public function confirm(
         string $title = 'Are you sure?',
         string $text = "You won't be able to revert this!",
@@ -101,9 +83,6 @@ class SwalService
         $this->dispatch('swal:confirm', array_merge($defaultOptions, $options));
     }
 
-    /**
-     * Fire a toast notification
-     */
     public function toast(
         string $title,
         string $icon = 'success',
@@ -123,9 +102,6 @@ class SwalService
         $this->fire(array_merge($defaultOptions, $options));
     }
 
-    /**
-     * Fire a loading alert
-     */
     public function loading(string $title = 'Loading...', string $text = 'Please wait'): void
     {
         $this->fire([
@@ -138,22 +114,25 @@ class SwalService
         ]);
     }
 
-    /**
-     * Close any open SweetAlert
-     */
     public function close(): void
     {
         $this->dispatch('swal:close');
     }
 
-    /**
-     * Dispatch browser event for Livewire
-     */
     protected function dispatch(string $event, array $data = []): void
     {
         // Check if we're in a Livewire component context
         if (app()->bound('livewire') && app('livewire')->current()) {
-            app('livewire')->current()->dispatch($event, $data);
+            $component = app('livewire')->current();
+            
+            // Livewire 3 uses dispatch(), Livewire 2 uses dispatchBrowserEvent()
+            if (method_exists($component, 'dispatch')) {
+                // Livewire 3
+                $component->dispatch($event, $data);
+            } else {
+                // Livewire 2
+                $component->dispatchBrowserEvent($event, $data);
+            }
         } else {
             // Fallback: store in session for next request
             session()->flash('swal_alert', ['event' => $event, 'data' => $data]);
