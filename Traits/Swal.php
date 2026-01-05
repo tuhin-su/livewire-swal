@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Concerns;
+namespace App\Http\Traits;
 
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-trait WithSwal
+trait Swal
 {
     // Toast (small)
     protected function swalToastSuccess(string $title = 'Success', string $text = '', array $opts = []): void
@@ -49,7 +49,8 @@ trait WithSwal
         array $thenParams = [],
         ?string $thenEventTo = null
     ): void {
-        $this->dispatch('swal:confirm',
+        $this->dispatch(
+            'swal:confirm',
             title: $title,
             text: $text,
             thenEvent: $thenEvent,
@@ -69,7 +70,8 @@ trait WithSwal
         array $thenParams = [],
         ?string $thenEventTo = null
     ): void {
-        $this->dispatch('swal:input',
+        $this->dispatch(
+            'swal:input',
             title: $title,
             text: $text,
             input: $input,
@@ -89,7 +91,8 @@ trait WithSwal
         array $thenParams = [],
         ?string $thenEventTo = null
     ): void {
-        $this->dispatch('swal:password',
+        $this->dispatch(
+            'swal:password',
             title: $title,
             text: $text,
             thenEvent: $thenEvent,
@@ -117,7 +120,8 @@ trait WithSwal
         array $thenParamsFalse = [],
         ?string $thenEventTo = null
     ): void {
-        $this->dispatch('swal:verify-current-password',
+        $this->dispatch(
+            'swal:verify-current-password',
             title: $title,
             text: $text,
             thenEventTrue: $thenEventTrue,
@@ -133,8 +137,8 @@ trait WithSwal
     #[On('swal.__verify_current_user_password')]
     public function __swalVerifyCurrentUserPassword(array $payload): void
     {
-        $plain = (string)($payload['value'] ?? '');
-        $thenEventTo   = $payload['thenEventTo']   ?? null;
+        $plain = (string) ($payload['value'] ?? '');
+        $thenEventTo = $payload['thenEventTo'] ?? null;
         $thenEventTrue = $payload['thenEventTrue'] ?? null;
         $thenParamsTrue = $payload['thenParamsTrue'] ?? [];
         $thenEventFalse = $payload['thenEventFalse'] ?? null;
@@ -148,14 +152,18 @@ trait WithSwal
         if ($ok) {
             $this->swalToastSuccess('Verified', 'Password confirmed');
             if ($thenEventTrue) {
-                if ($thenEventTo) $this->dispatchTo($thenEventTo, $thenEventTrue, $thenParamsTrue);
-                else $this->dispatch($thenEventTrue, $thenParamsTrue);
+                if ($thenEventTo)
+                    $this->dispatchTo($thenEventTo, $thenEventTrue, $thenParamsTrue);
+                else
+                    $this->dispatch($thenEventTrue, $thenParamsTrue);
             }
         } else {
             $this->swalToastError('Invalid', 'Incorrect password');
             if ($thenEventFalse) {
-                if ($thenEventTo) $this->dispatchTo($thenEventTo, $thenEventFalse, $thenParamsFalse);
-                else $this->dispatch($thenEventFalse, $thenParamsFalse);
+                if ($thenEventTo)
+                    $this->dispatchTo($thenEventTo, $thenEventFalse, $thenParamsFalse);
+                else
+                    $this->dispatch($thenEventFalse, $thenParamsFalse);
             }
         }
     }

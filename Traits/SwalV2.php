@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Livewire\Concerns;
+namespace App\Http\Traits;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-trait WithSwalV2
+trait Swal
 {
     // Toast (small)
     protected function swalToastSuccess(string $title = 'Success', string $text = '', array $opts = []): void
@@ -126,8 +126,8 @@ trait WithSwalV2
     // Handler to be mapped via $listeners in v2 components
     public function __swalVerifyCurrentUserPassword(array $payload): void
     {
-        $plain = (string)($payload['value'] ?? '');
-        $thenEventTo   = $payload['thenEventTo']   ?? null;
+        $plain = (string) ($payload['value'] ?? '');
+        $thenEventTo = $payload['thenEventTo'] ?? null;
         $thenEventTrue = $payload['thenEventTrue'] ?? null;
         $thenParamsTrue = $payload['thenParamsTrue'] ?? [];
         $thenEventFalse = $payload['thenEventFalse'] ?? null;
@@ -141,14 +141,18 @@ trait WithSwalV2
         if ($ok) {
             $this->swalToastSuccess('Verified', 'Password confirmed');
             if ($thenEventTrue) {
-                if ($thenEventTo) $this->emitTo($thenEventTo, $thenEventTrue, $thenParamsTrue);
-                else $this->emit($thenEventTrue, $thenParamsTrue);
+                if ($thenEventTo)
+                    $this->emitTo($thenEventTo, $thenEventTrue, $thenParamsTrue);
+                else
+                    $this->emit($thenEventTrue, $thenParamsTrue);
             }
         } else {
             $this->swalToastError('Invalid', 'Incorrect password');
             if ($thenEventFalse) {
-                if ($thenEventTo) $this->emitTo($thenEventTo, $thenEventFalse, $thenParamsFalse);
-                else $this->emit($thenEventFalse, $thenParamsFalse);
+                if ($thenEventTo)
+                    $this->emitTo($thenEventTo, $thenEventFalse, $thenParamsFalse);
+                else
+                    $this->emit($thenEventFalse, $thenParamsFalse);
             }
         }
     }
