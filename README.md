@@ -416,17 +416,71 @@ class UserManagement extends Component
 
 ## JavaScript-only Usage
 
-All SweetAlert2 helpers are bound to the `window` object and can be used directly in custom scripts:
+All SweetAlert2 helpers are bound to the global `window` object and can be called directly in your custom frontend JavaScript (e.g. within Blade script tags, Alpine.js handlers, or custom assets):
 
-- `swalToastSuccess(title, text, opts)`
-- `swalToastWarning(title, text, opts)`
-- `swalToastError(title, text, opts)`
-- `swalFireSuccess(title, text, opts)`
-- `swalFireWarning(title, text, opts)`
-- `swalFireError(title, text, opts)`
-- `swalFireAsk(cfg)` (returns `Promise<boolean>`)
-- `swalTakeInput(cfg)` (returns `Promise<string|null>`)
-- `swalPromptPassword(cfg)`
+### 1. Trigger Toasts (Small, Top-End)
+```javascript
+// Success Toast
+window.swalToastSuccess('Success!', 'The action succeeded.');
+
+// Warning Toast with custom SweetAlert options (e.g. 5 seconds duration)
+window.swalToastWarning('Warning', 'Check configuration.', { timer: 5000 });
+
+// Error Toast
+window.swalToastError('Oops!', 'Something went wrong.');
+```
+
+### 2. Trigger Modals (Larger Center Dialogs)
+```javascript
+window.swalFireSuccess('Success Modal', 'Operation finished!');
+window.swalFireWarning('Warning Modal', 'Please check this.');
+window.swalFireError('Error Modal', 'Action failed.');
+```
+
+### 3. Ask for Confirmation (Returns Promise)
+Returns a promise that resolves to `true` (if confirmed) or `false` (if cancelled):
+```javascript
+const ok = await window.swalFireAsk({
+    title: 'Delete this draft?',
+    text: 'This will remove the draft permanently.',
+    confirmButtonText: 'Yes, Delete',
+    cancelButtonText: 'Cancel'
+});
+
+if (ok) {
+    console.log('User confirmed deletion');
+} else {
+    console.log('User cancelled');
+}
+```
+
+### 4. Prompt for Text Input (Returns Promise)
+Returns a promise that resolves to the entered string, or `null` if the user cancelled the dialog:
+```javascript
+const note = await window.swalTakeInput({
+    title: 'Add a note',
+    input: 'textarea',
+    inputPlaceholder: 'Type your note here...',
+    confirmButtonText: 'Save Note'
+});
+
+if (note !== null) {
+    console.log('User entered:', note);
+}
+```
+
+### 5. Prompt for Password (Returns Promise)
+Returns a promise that resolves to the entered password string, or `null` if cancelled:
+```javascript
+const password = await window.swalPromptPassword({
+    title: 'Enter Admin Password',
+    confirmButtonText: 'Confirm'
+});
+
+if (password !== null) {
+    console.log('Password submitted');
+}
+```
 
 ---
 
