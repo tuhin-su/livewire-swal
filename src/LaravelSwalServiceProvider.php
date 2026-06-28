@@ -14,7 +14,7 @@ class LaravelSwalServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/laravel-generic-swal.php', 'laravel-generic-swal'
+            __DIR__.'/../config/laravel-swal.php', 'laravel-swal'
         );
     }
 
@@ -25,16 +25,16 @@ class LaravelSwalServiceProvider extends ServiceProvider
     {
         // Publish configuration
         $this->publishes([
-            __DIR__.'/../config/laravel-generic-swal.php' => config_path('laravel-generic-swal.php'),
-        ], 'laravel-generic-swal-config');
+            __DIR__.'/../config/laravel-swal.php' => config_path('laravel-swal.php'),
+        ], 'laravel-swal-config');
 
         // Publish JS assets
         $this->publishes([
-            __DIR__.'/../resources/js/swal.js' => resource_path('js/vendor/laravel-generic-swal/swal.js'),
-        ], 'laravel-generic-swal-assets');
+            __DIR__.'/../resources/js/swal.js' => resource_path('js/vendor/laravel-swal/swal.js'),
+        ], 'laravel-swal-assets');
 
         // Automatically inject SweetAlert2 and script wrapper on web routes if enabled
-        if (config('laravel-generic-swal.auto_inject', true)) {
+        if (config('laravel-swal.auto_inject', true)) {
             $router->pushMiddlewareToGroup('web', InjectSwal::class);
         }
     }

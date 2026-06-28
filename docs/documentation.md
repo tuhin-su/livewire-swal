@@ -54,7 +54,7 @@ Ideal for rapid prototyping or applications where you want SweetAlert2 to work i
 
 1. **Install package**:
    ```bash
-   composer require tuhin-su/laravel-generic-swal
+   composer require tuhin-su/livewire-swal
    ```
 2. **Import Trait**: Import `LaravelSwal\Traits\Swal` directly into your Livewire component classes.
    *The SweetAlert2 jsDelivr CDN and wrappers are automatically appended to the closing `</body>` tag of your templates.*
@@ -66,14 +66,14 @@ Ideal for production applications where you want to host assets locally, bundle 
 
 1. **Install package**:
    ```bash
-   composer require tuhin-su/laravel-generic-swal
+   composer require tuhin-su/livewire-swal
    ```
 2. **Publish resources**:
    ```bash
-   php artisan vendor:publish --tag=laravel-generic-swal-config
-   php artisan vendor:publish --tag=laravel-generic-swal-assets
+   php artisan vendor:publish --tag=laravel-swal-config
+   php artisan vendor:publish --tag=laravel-swal-assets
    ```
-3. **Configure Auto-injection**: Set `auto_inject` to `false` in `config/laravel-generic-swal.php` to prevent CDN injection:
+3. **Configure Auto-injection**: Set `auto_inject` to `false` in `config/laravel-swal.php` to prevent CDN injection:
    ```php
    'auto_inject' => false,
    ```
@@ -85,14 +85,14 @@ Ideal for production applications where you want to host assets locally, bundle 
    ```javascript
    import Swal from 'sweetalert2'
    window.Swal = Swal
-   import './vendor/laravel-generic-swal/swal'
+   import './vendor/laravel-swal/swal'
    ```
 
 ---
 
 ## 3. Configuration Reference
 
-Publish the configuration file using `php artisan vendor:publish --tag=laravel-generic-swal-config`.
+Publish the configuration file using `php artisan vendor:publish --tag=laravel-swal-config`.
 
 | Key | Type | Default | Description |
 | :--- | :--- | :--- | :--- |

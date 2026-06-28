@@ -1,8 +1,8 @@
 # Laravel & Livewire 3+ SweetAlert2 Helpers
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/tuhin-su/laravel-generic-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/laravel-generic-swal)
-[![Total Downloads](https://img.shields.io/packagist/dt/tuhin-su/laravel-generic-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/laravel-generic-swal)
-[![License](https://img.shields.io/packagist/l/tuhin-su/laravel-generic-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/laravel-generic-swal)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/tuhin-su/livewire-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/livewire-swal)
+[![Total Downloads](https://img.shields.io/packagist/dt/tuhin-su/livewire-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/livewire-swal)
+[![License](https://img.shields.io/packagist/l/tuhin-su/livewire-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/livewire-swal)
 
 A simple, reusable global SweetAlert2 integration for Laravel and Livewire 3 with clean, secure, one-line PHP wrappers.
 
@@ -37,12 +37,12 @@ Use this option if you want the package to work instantly without running build 
 
 1. **Install via Composer**:
    ```bash
-   composer require tuhin-su/laravel-generic-swal
+   composer require tuhin-su/livewire-swal
    ```
    **That's it!** The package automatically injects the SweetAlert2 CDN and the event wrapper into the closing `</body>` tag of all HTML pages.
 
    > [!TIP]
-   > **Self-Hosting / Customizing SWAL CDN**: By default, SweetAlert2 is loaded via jsDelivr CDN. If you want to host it yourself locally or use a custom CDN URL, publish the config file using `php artisan vendor:publish --tag=laravel-generic-swal-config` and edit the `swal_cdn` key in `config/laravel-generic-swal.php`. Set it to `false` or `null` if you already load SweetAlert2 separately in your layouts.
+   > **Self-Hosting / Customizing SWAL CDN**: By default, SweetAlert2 is loaded via jsDelivr CDN. If you want to host it yourself locally or use a custom CDN URL, publish the config file using `php artisan vendor:publish --tag=laravel-swal-config` and edit the `swal_cdn` key in `config/laravel-swal.php`. Set it to `false` or `null` if you already load SweetAlert2 separately in your layouts.
 
 2. **Use the Trait in your Livewire Component**:
    ```php
@@ -69,21 +69,21 @@ Use this option if you prefer to compile the assets locally, bundle SweetAlert2 
 
 1. **Install via Composer**:
    ```bash
-   composer require tuhin-su/laravel-generic-swal
+   composer require tuhin-su/livewire-swal
    ```
 
 2. **Publish Configuration & Assets**:
    Run the publish command to copy files into your application's resources directory:
    ```bash
-   php artisan vendor:publish --tag=laravel-generic-swal-config
-   php artisan vendor:publish --tag=laravel-generic-swal-assets
+   php artisan vendor:publish --tag=laravel-swal-config
+   php artisan vendor:publish --tag=laravel-swal-assets
    ```
    This will create:
-   - Config file at `config/laravel-generic-swal.php`
-   - JS wrapper file at `resources/js/vendor/laravel-generic-swal/swal.js`
+   - Config file at `config/laravel-swal.php`
+   - JS wrapper file at `resources/js/vendor/laravel-swal/swal.js`
 
 3. **Disable Auto-Injection**:
-   Open `config/laravel-generic-swal.php` and set `auto_inject` to `false` to disable the middleware CDN injection:
+   Open `config/laravel-swal.php` and set `auto_inject` to `false` to disable the middleware CDN injection:
    ```php
    'auto_inject' => false,
    ```
@@ -98,7 +98,7 @@ Use this option if you prefer to compile the assets locally, bundle SweetAlert2 
    ```javascript
    import Swal from 'sweetalert2'
    window.Swal = Swal
-   import './vendor/laravel-generic-swal/swal'
+   import './vendor/laravel-swal/swal'
    ```
    *Make sure your layout contains your Vite directive: `@vite(['resources/css/app.css', 'resources/js/app.js'])`.*
 

@@ -1,5 +1,5 @@
 {
-    "name": "tuhin-su/laravel-generic-swal",
+    "name": "tuhin-su/livewire-swal",
     "description": "A reusable global SweetAlert2 integration for Laravel and Livewire 3 with clean, secure, one-line PHP wrappers.",
     "type": "library",
     "license": "MIT",

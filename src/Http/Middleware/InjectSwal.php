@@ -48,7 +48,7 @@ class InjectSwal
     protected function getScripts(): string
     {
         $swalCdn = '';
-        $cdnUrl = config('laravel-generic-swal.swal_cdn', 'https://cdn.jsdelivr.net/npm/sweetalert2@11');
+        $cdnUrl = config('laravel-swal.swal_cdn', 'https://cdn.jsdelivr.net/npm/sweetalert2@11');
         
         if ($cdnUrl) {
             $swalCdn = '<script src="' . e($cdnUrl) . '"></script>' . "\n";
