@@ -56,7 +56,7 @@ Ideal for rapid prototyping or applications where you want SweetAlert2 to work i
    ```bash
    composer require tuhin-su/laravel-generic-swal
    ```
-2. **Import Trait**: Import `TuhinSu\LaravelGenericSwal\Traits\Swal` directly into your Livewire component classes.
+2. **Import Trait**: Import `LaravelGenericSwal\Traits\Swal` directly into your Livewire component classes.
    *The SweetAlert2 jsDelivr CDN and wrappers are automatically appended to the closing `</body>` tag of your templates.*
 
 ---
@@ -103,7 +103,7 @@ Publish the configuration file using `php artisan vendor:publish --tag=laravel-g
 
 ## 4. PHP Helper API
 
-All PHP helper methods are provided by importing the `TuhinSu\LaravelGenericSwal\Traits\Swal` trait in your Livewire components.
+All PHP helper methods are provided by importing the `LaravelGenericSwal\Traits\Swal` trait in your Livewire components.
 
 ### Toast Notifications (Small, Top-End)
 ```php
@@ -168,7 +168,7 @@ Instead, use **`swalSecureAction()`**.
 Define your execution method as `protected` or `private`. Since Livewire only exposes `public` methods, clients cannot invoke it directly.
 
 ```php
-use TuhinSu\LaravelGenericSwal\Traits\Swal;
+use LaravelGenericSwal\Traits\Swal;
 use Livewire\Component;
 
 class SettingsComponent extends Component

@@ -1,6 +1,6 @@
 <?php
 
-namespace TuhinSu\LaravelGenericSwal\Http\Middleware;
+namespace LaravelGenericSwal\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

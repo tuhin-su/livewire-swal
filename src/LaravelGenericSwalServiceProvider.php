@@ -1,10 +1,10 @@
 <?php
 
-namespace TuhinSu\LaravelGenericSwal;
+namespace LaravelGenericSwal;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
-use TuhinSu\LaravelGenericSwal\Http\Middleware\InjectSwal;
+use LaravelGenericSwal\Http\Middleware\InjectSwal;
 
 class LaravelGenericSwalServiceProvider extends ServiceProvider
 {

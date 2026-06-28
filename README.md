@@ -49,7 +49,7 @@ Use this option if you want the package to work instantly without running build 
    namespace App\Livewire;
 
    use Livewire\Component;
-   use TuhinSu\LaravelGenericSwal\Traits\Swal;
+   use LaravelGenericSwal\Traits\Swal;
 
    class MyComponent extends Component
    {
@@ -107,7 +107,7 @@ Use this option if you prefer to compile the assets locally, bundle SweetAlert2 
    namespace App\Livewire;
 
    use Livewire\Component;
-   use TuhinSu\LaravelGenericSwal\Traits\Swal;
+   use LaravelGenericSwal\Traits\Swal;
 
    class MyComponent extends Component
    {
@@ -325,7 +325,7 @@ $this->swalSecureAction(
 First, trigger the secure action flow when a user clicks a button:
 
 ```php
-use TuhinSu\LaravelGenericSwal\Traits\Swal;
+use LaravelGenericSwal\Traits\Swal;
 use Livewire\Component;
 
 class UserManagement extends Component

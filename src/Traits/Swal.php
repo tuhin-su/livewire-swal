@@ -1,6 +1,6 @@
 <?php
 
-namespace TuhinSu\LaravelGenericSwal\Traits;
+namespace LaravelGenericSwal\Traits;
 
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;

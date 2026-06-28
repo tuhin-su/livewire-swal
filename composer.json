@@ -16,13 +16,13 @@
     },
     "autoload": {
         "psr-4": {
-            "TuhinSu\\LaravelGenericSwal\\": "src/"
+            "LaravelGenericSwal\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "TuhinSu\\LaravelGenericSwal\\LaravelGenericSwalServiceProvider"
+                "LaravelGenericSwal\\LaravelGenericSwalServiceProvider"
             ]
         }
     },
