@@ -105,6 +105,46 @@
     return res.isConfirmed
   }
 
+  // Execute a secure cryptographically signed action (multi-step) from client-side JS
+  window.swalExecuteSecureAction = async (encryptedPayload, requirePassword = false, opts = {}) => {
+    const {
+      confirmTitle = 'Are you sure?',
+      confirmText = '',
+      confirmOpts = {},
+      passwordTitle = 'Enter your password',
+      passwordText = 'Please confirm your password to continue',
+      passwordOpts = {}
+    } = opts
+
+    // 1. First step: Confirm dialog (if confirmTitle is specified)
+    if (confirmTitle) {
+      const ok = await window.swalFireAsk({
+        title: confirmTitle,
+        text: confirmText,
+        ...confirmOpts
+      })
+      if (!ok) return false // User cancelled
+    }
+
+    // 2. Second step: Password prompt (if requirePassword is true)
+    let password = null
+    if (requirePassword) {
+      password = await window.swalPromptPassword({
+        title: passwordTitle,
+        text: passwordText,
+        ...passwordOpts
+      })
+      if (password === null) return false // User cancelled password prompt
+    }
+
+    // 3. Final step: Dispatch secure action payload back to server
+    Livewire.dispatch('swal.__execute_secure_action', {
+      encryptedPayload,
+      password
+    })
+    return true
+  }
+
   // Livewire v3 integration
   document.addEventListener('livewire:init', () => {
     if (window.__swalLivewireBound) return
@@ -203,36 +243,18 @@
         confirmTitle,
         confirmText = '',
         confirmOpts = {},
-        passwordTitle = 'Enter your password',
-        passwordText = 'Please confirm your password to continue',
-        passwordOpts = {}
+        passwordTitle,
+        passwordText,
+        passwordOpts
       } = cfg || {}
 
-      // 1. First step: Confirm dialog (if confirmTitle is specified)
-      if (confirmTitle) {
-        const ok = await window.swalFireAsk({
-          title: confirmTitle,
-          text: confirmText,
-          ...confirmOpts
-        })
-        if (!ok) return // User cancelled
-      }
-
-      // 2. Second step: Password prompt (if requirePassword is true)
-      let password = null
-      if (requirePassword) {
-        password = await window.swalPromptPassword({
-          title: passwordTitle,
-          text: passwordText,
-          ...passwordOpts
-        })
-        if (password === null) return // User cancelled password prompt
-      }
-
-      // 3. Final step: Dispatch secure action payload back to server
-      Livewire.dispatch('swal.__execute_secure_action', {
-        encryptedPayload,
-        password
+      await window.swalExecuteSecureAction(encryptedPayload, requirePassword, {
+        confirmTitle,
+        confirmText,
+        confirmOpts,
+        passwordTitle,
+        passwordText,
+        passwordOpts
       })
     })
   })

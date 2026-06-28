@@ -320,6 +320,55 @@ $this->swalSecureAction(
 );
 ```
 
+### Direct JS Invocation (Triggering from Frontend)
+
+Sometimes you may want to trigger a secure verification directly from custom Javascript, Alpine.js, or an inline `onclick` handler in your Blade template, rather than dispatching it from a Livewire PHP method call.
+
+You can achieve this in two steps:
+1. **Generate the Encrypted Token**: Call `swalGenerateSecureActionPayload()` on the server side (e.g. inside `render()` or mount, and pass it to your view).
+2. **Execute in JavaScript**: Call `window.swalExecuteSecureAction(payload, requirePassword, options)` directly in your template.
+
+#### Example
+
+In your Livewire Component (PHP):
+```php
+class Settings extends Component
+{
+    use Swal;
+
+    public function render()
+    {
+        // Generate the cryptographically signed token
+        $deletePayload = $this->swalGenerateSecureActionPayload(
+            method: 'deleteAccount',
+            params: ['id' => 5],
+            requirePassword: true
+        );
+
+        return view('livewire.settings', [
+            'deletePayload' => $deletePayload
+        ]);
+    }
+
+    protected function deleteAccount($id)
+    {
+        // Executes securely on verification
+    }
+}
+```
+
+In your Blade Template (HTML/JS):
+```html
+<!-- Trigger the multi-step prompt sequence directly from Javascript onclick -->
+<button onclick="window.swalExecuteSecureAction('{{ $deletePayload }}', true, {
+    confirmTitle: 'Are you sure?',
+    confirmText: 'This action is irreversible.',
+    passwordTitle: 'Password Required'
+})">
+    Delete Account
+</button>
+```
+
 ### Full Multi-Step Example
 
 First, trigger the secure action flow when a user clicks a button:

@@ -169,6 +169,22 @@ trait Swal
     }
 
     /**
+     * Generates a cryptographically signed/encrypted payload for a secure action.
+     * Use this if you want to render the payload in your Blade template and trigger the action directly from JavaScript.
+     */
+    protected function swalGenerateSecureActionPayload(string $method, array $params = [], bool $requirePassword = false): string
+    {
+        return encrypt([
+            'method' => $method,
+            'params' => $params,
+            'requirePassword' => $requirePassword,
+            'user_id' => Auth::id(),
+            'component' => get_class($this),
+            'expires_at' => now()->addMinutes(10)->timestamp,
+        ]);
+    }
+
+    /**
      * Secure one-call action flow with multi-step support.
      * Generates a cryptographically signed/encrypted payload on the server.
      * Invokes confirmation (Yes/No) and/or password prompts on the client.
@@ -186,16 +202,7 @@ trait Swal
         string $passwordText = 'Please confirm your password to continue',
         array $passwordOpts = []
     ): void {
-        $payload = [
-            'method' => $method,
-            'params' => $params,
-            'requirePassword' => $requirePassword,
-            'user_id' => Auth::id(),
-            'component' => get_class($this),
-            'expires_at' => now()->addMinutes(10)->timestamp,
-        ];
-
-        $encryptedPayload = encrypt($payload);
+        $encryptedPayload = $this->swalGenerateSecureActionPayload($method, $params, $requirePassword);
 
         $this->dispatch(
             'swal:secure-action',

@@ -197,3 +197,27 @@ class SettingsComponent extends Component
     }
 }
 ```
+
+### Direct JS Trigger Option
+
+You can generate the token on the server-side, render it into your template, and trigger the multi-step prompts directly in JavaScript via the `window.swalExecuteSecureAction(payload, requirePassword, options)` helper.
+
+#### Component Method:
+```php
+public function render()
+{
+    $token = $this->swalGenerateSecureActionPayload('processTransfer', ['to' => '123', 'amount' => 100], true);
+    return view('livewire.settings', ['token' => $token]);
+}
+```
+
+#### Template Button:
+```html
+<button onclick="window.swalExecuteSecureAction('{{ $token }}', true, {
+    confirmTitle: 'Confirm Transfer?',
+    confirmText: 'This will authorize the transfer.',
+    passwordTitle: 'Verification Required'
+})">
+    Transfer Funds
+</button>
+```
