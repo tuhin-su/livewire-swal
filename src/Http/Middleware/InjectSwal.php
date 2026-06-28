@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelGenericSwal\Http\Middleware;
+namespace LaravelSwal\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

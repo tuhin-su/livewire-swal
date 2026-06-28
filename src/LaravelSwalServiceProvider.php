@@ -1,12 +1,12 @@
 <?php
 
-namespace LaravelGenericSwal;
+namespace LaravelSwal;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
-use LaravelGenericSwal\Http\Middleware\InjectSwal;
+use LaravelSwal\Http\Middleware\InjectSwal;
 
-class LaravelGenericSwalServiceProvider extends ServiceProvider
+class LaravelSwalServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.

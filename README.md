@@ -49,7 +49,7 @@ Use this option if you want the package to work instantly without running build 
    namespace App\Livewire;
 
    use Livewire\Component;
-   use LaravelGenericSwal\Traits\Swal;
+   use LaravelSwal\Traits\Swal;
 
    class MyComponent extends Component
    {
@@ -107,7 +107,7 @@ Use this option if you prefer to compile the assets locally, bundle SweetAlert2 
    namespace App\Livewire;
 
    use Livewire\Component;
-   use LaravelGenericSwal\Traits\Swal;
+   use LaravelSwal\Traits\Swal;
 
    class MyComponent extends Component
    {
@@ -374,7 +374,7 @@ In your Blade Template (HTML/JS):
 First, trigger the secure action flow when a user clicks a button:
 
 ```php
-use LaravelGenericSwal\Traits\Swal;
+use LaravelSwal\Traits\Swal;
 use Livewire\Component;
 
 class UserManagement extends Component

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelGenericSwal\Traits;
+namespace LaravelSwal\Traits;
 
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
