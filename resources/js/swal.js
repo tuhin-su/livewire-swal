@@ -153,18 +153,18 @@
     // Toast from PHP
     Livewire.on('swal:toast', (cfg = {}) => {
       const { icon, title, text, opts = {} } = cfg || {}
-      if (icon === 'success') return window.swalToastSuccess(title || 'Success', text || '', opts)
-      if (icon === 'warning') return window.swalToastWarning(title || 'Warning', text || '', opts)
-      if (icon === 'error')   return window.swalToastError(title || 'Error', text || '', opts)
+      if (icon === 'success') return window.swalToastSuccess(title ?? 'Success', text ?? '', opts)
+      if (icon === 'warning') return window.swalToastWarning(title ?? 'Warning', text ?? '', opts)
+      if (icon === 'error')   return window.swalToastError(title ?? 'Error', text ?? '', opts)
       return Toast.fire({ title, text, ...opts })
     })
 
     // Modal from PHP
     Livewire.on('swal:modal', (cfg = {}) => {
       const { icon, title, text, opts = {} } = cfg || {}
-      if (icon === 'success') return window.swalFireSuccess(title || 'Success', text || '', opts)
-      if (icon === 'warning') return window.swalFireWarning(title || 'Warning', text || '', opts)
-      if (icon === 'error')   return window.swalFireError(title || 'Error', text || '', opts)
+      if (icon === 'success') return window.swalFireSuccess(title ?? 'Success', text ?? '', opts)
+      if (icon === 'warning') return window.swalFireWarning(title ?? 'Warning', text ?? '', opts)
+      if (icon === 'error')   return window.swalFireError(title ?? 'Error', text ?? '', opts)
       return Swal.fire({ title, text, ...opts })
     })
 
@@ -194,7 +194,7 @@
       }
       const value = await window.swalTakeInput(inputCfg)
       if (value === null || !thenEvent) return
-      const payload = { value, ...thenParams }
+      const payload = { ...thenParams, value }
       if (thenEventTo) Livewire.dispatchTo(thenEventTo, thenEvent, payload)
       else Livewire.dispatch(thenEvent, payload)
     })
@@ -209,7 +209,7 @@
       }
       const value = await window.swalPromptPassword(passwordCfg)
       if (value === null || !thenEvent) return
-      const payload = { value, ...thenParams }
+      const payload = { ...thenParams, value }
       if (thenEventTo) Livewire.dispatchTo(thenEventTo, thenEvent, payload)
       else Livewire.dispatch(thenEvent, payload)
     })
