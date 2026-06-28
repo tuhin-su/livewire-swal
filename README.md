@@ -1,6 +1,10 @@
 # Laravel & Livewire 3+ SweetAlert2 Helpers
 
-A simple, reusable global SweetAlert2 integration for Laravel and Livewire 3 with clean, fluent, one-line PHP wrappers.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/tuhin-su/laravel-generic-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/laravel-generic-swal)
+[![Total Downloads](https://img.shields.io/packagist/dt/tuhin-su/laravel-generic-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/laravel-generic-swal)
+[![License](https://img.shields.io/packagist/l/tuhin-su/laravel-generic-swal.svg?style=flat-square)](https://packagist.org/packages/tuhin-su/laravel-generic-swal)
+
+A simple, reusable global SweetAlert2 integration for Laravel and Livewire 3 with clean, secure, one-line PHP wrappers.
 
 ---
 
