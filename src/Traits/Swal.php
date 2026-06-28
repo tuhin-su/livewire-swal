@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Traits;
+namespace TuhinSu\LaravelGenericSwal\Traits;
 
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
@@ -166,5 +166,100 @@ trait Swal
                     $this->dispatch($thenEventFalse, $thenParamsFalse);
             }
         }
+    }
+
+    /**
+     * Secure one-call action flow with multi-step support.
+     * Generates a cryptographically signed/encrypted payload on the server.
+     * Invokes confirmation (Yes/No) and/or password prompts on the client.
+     * Executes the target component method internally (on the server) after verifying the payload and password.
+     * Note: The target method can (and should) be defined as protected/private to prevent direct invocation by clients.
+     */
+    protected function swalSecureAction(
+        string $method,
+        array $params = [],
+        bool $requirePassword = false,
+        string $confirmTitle = 'Are you sure?',
+        string $confirmText = '',
+        array $confirmOpts = [],
+        string $passwordTitle = 'Enter your password',
+        string $passwordText = 'Please confirm your password to continue',
+        array $passwordOpts = []
+    ): void {
+        $payload = [
+            'method' => $method,
+            'params' => $params,
+            'requirePassword' => $requirePassword,
+            'user_id' => Auth::id(),
+            'component' => get_class($this),
+            'expires_at' => now()->addMinutes(10)->timestamp,
+        ];
+
+        $encryptedPayload = encrypt($payload);
+
+        $this->dispatch(
+            'swal:secure-action',
+            encryptedPayload: $encryptedPayload,
+            requirePassword: $requirePassword,
+            confirmTitle: $confirmTitle,
+            confirmText: $confirmText,
+            confirmOpts: $confirmOpts,
+            passwordTitle: $passwordTitle,
+            passwordText: $passwordText,
+            passwordOpts: $passwordOpts
+        );
+    }
+
+    #[On('swal.__execute_secure_action')]
+    public function __swalExecuteSecureAction(string $encryptedPayload, ?string $password = null): void
+    {
+        try {
+            $payload = decrypt($encryptedPayload);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            $this->swalToastError('Security Error', 'Invalid or tampered action payload.');
+            return;
+        }
+
+        // Validate expiration
+        if (!isset($payload['expires_at']) || now()->timestamp > $payload['expires_at']) {
+            $this->swalToastError('Expired', 'This action has expired. Please try again.');
+            return;
+        }
+
+        // Validate user session match
+        if (($payload['user_id'] ?? null) !== Auth::id()) {
+            $this->swalToastError('Security Error', 'Session mismatch. Action unauthorized.');
+            return;
+        }
+
+        // Validate component match
+        if (($payload['component'] ?? null) !== get_class($this)) {
+            $this->swalToastError('Security Error', 'Component mismatch.');
+            return;
+        }
+
+        // Verify password if required
+        if ($payload['requirePassword'] ?? false) {
+            $plain = (string) $password;
+            $ok = false;
+            if (Auth::check()) {
+                $ok = Hash::check($plain, Auth::user()->getAuthPassword());
+            }
+            if (!$ok) {
+                $this->swalToastError('Invalid Password', 'Incorrect password. Action aborted.');
+                return;
+            }
+        }
+
+        $method = $payload['method'];
+        $params = $payload['params'] ?? [];
+
+        if (!method_exists($this, $method)) {
+            $this->swalToastError('Error', 'The action handler could not be found.');
+            return;
+        }
+
+        // Execute the target method dynamically on this component
+        $this->{$method}(...$params);
     }
 }

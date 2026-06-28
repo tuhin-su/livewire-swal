@@ -1,0 +1,31 @@
+{
+    "name": "tuhin-su/laravel-generic-swal",
+    "description": "A reusable global SweetAlert2 integration for Laravel and Livewire 3 with clean, secure, one-line PHP wrappers.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tuhin",
+            "email": "tuhin@example.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0|^11.0",
+        "livewire/livewire": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TuhinSu\\LaravelGenericSwal\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TuhinSu\\LaravelGenericSwal\\LaravelGenericSwalServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
