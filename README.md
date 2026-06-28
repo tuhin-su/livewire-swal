@@ -41,6 +41,9 @@ Use this option if you want the package to work instantly without running build 
    ```
    **That's it!** The package automatically injects the SweetAlert2 CDN and the event wrapper into the closing `</body>` tag of all HTML pages.
 
+   > [!TIP]
+   > **Self-Hosting / Customizing SWAL CDN**: By default, SweetAlert2 is loaded via jsDelivr CDN. If you want to host it yourself locally or use a custom CDN URL, publish the config file using `php artisan vendor:publish --tag=laravel-generic-swal-config` and edit the `swal_cdn` key in `config/laravel-generic-swal.php`. Set it to `false` or `null` if you already load SweetAlert2 separately in your layouts.
+
 2. **Use the Trait in your Livewire Component**:
    ```php
    namespace App\Livewire;

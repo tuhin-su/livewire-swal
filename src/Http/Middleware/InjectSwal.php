@@ -41,14 +41,18 @@ class InjectSwal
 
     protected function getScripts(): string
     {
-        // Auto-install SweetAlert2 by loading it from the jsDelivr CDN
-        $swalCdn = '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+        $swalCdn = '';
+        $cdnUrl = config('laravel-generic-swal.swal_cdn', 'https://cdn.jsdelivr.net/npm/sweetalert2@11');
+        
+        if ($cdnUrl) {
+            $swalCdn = '<script src="' . e($cdnUrl) . '"></script>' . "\n";
+        }
         
         $jsPath = __DIR__ . '/../../resources/js/swal.js';
         $ourJs = file_exists($jsPath) ? file_get_contents($jsPath) : '';
         
         return "\n<!-- Laravel Generic Swal Helpers -->\n" . 
-               $swalCdn . "\n" . 
+               $swalCdn . 
                "<script>\n" . $ourJs . "\n</script>\n";
     }
 }
