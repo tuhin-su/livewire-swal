@@ -152,18 +152,20 @@ trait Swal
         if ($ok) {
             $this->swalToastSuccess('Verified', 'Password confirmed');
             if ($thenEventTrue) {
-                if ($thenEventTo)
-                    $this->dispatchTo($thenEventTo, $thenEventTrue, $thenParamsTrue);
-                else
-                    $this->dispatch($thenEventTrue, $thenParamsTrue);
+                if ($thenEventTo) {
+                    $this->dispatch($thenEventTrue, ...$thenParamsTrue)->to($thenEventTo);
+                } else {
+                    $this->dispatch($thenEventTrue, ...$thenParamsTrue);
+                }
             }
         } else {
             $this->swalToastError('Invalid', 'Incorrect password');
             if ($thenEventFalse) {
-                if ($thenEventTo)
-                    $this->dispatchTo($thenEventTo, $thenEventFalse, $thenParamsFalse);
-                else
-                    $this->dispatch($thenEventFalse, $thenParamsFalse);
+                if ($thenEventTo) {
+                    $this->dispatch($thenEventFalse, ...$thenParamsFalse)->to($thenEventTo);
+                } else {
+                    $this->dispatch($thenEventFalse, ...$thenParamsFalse);
+                }
             }
         }
     }

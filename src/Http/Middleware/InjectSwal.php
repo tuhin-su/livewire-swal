@@ -11,6 +11,12 @@ class InjectSwal
     {
         $response = $next($request);
 
+        // Skip injection for binary file and streamed responses
+        if ($response instanceof \Symfony\Component\HttpFoundation\BinaryFileResponse ||
+            $response instanceof \Symfony\Component\HttpFoundation\StreamedResponse) {
+            return $response;
+        }
+
         // Skip injection for Ajax, JSON, Livewire updates, or non-HTML responses
         if ($request->ajax() || $request->wantsJson() || $request->headers->has('X-Livewire')) {
             return $response;

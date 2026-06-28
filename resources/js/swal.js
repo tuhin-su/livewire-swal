@@ -232,7 +232,7 @@
       const value = await window.swalPromptPassword(passwordCfg)
       if (value === null) return
       const payload = { value, thenEventTrue, thenParamsTrue, thenEventFalse, thenParamsFalse, thenEventTo }
-      Livewire.dispatch('swal.__verify_current_user_password', payload)
+      Livewire.dispatch('swal.__verify_current_user_password', { payload })
     })
 
     // Secure cryptographically signed action (prevents client-side bypass)
